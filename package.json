@@ -1,0 +1,33 @@
+{
+  "name": "@accility/protoc-tools",
+  "version": "0.9.0",
+  "description": "Utility for Google's protobuf compiler protoc",
+  "keywords": [
+    "grpc",
+    "proto",
+    "protoc",
+    "protobuffers",
+    "tools"
+  ],
+  "author": "Accility AB",
+  "license": "MIT",
+  "public": true,
+  "repository": {
+    "url": "https://github.com/accility/protoc-tools.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "main": "./dist/lib/protoc.js",
+  "types": "./dist/lib/protoc.d.ts",
+  "bin": {
+    "protoc": "./dist/bin/protoc-cli.js"
+  },
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^13.9.8",
+    "typescript": "^3.8.3"
+  }
+}
