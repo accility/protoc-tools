@@ -4,7 +4,6 @@ import { spawn } from 'child_process';
 export interface PluginOptions {
     name: string;
     path: string;
-    outOptions: string;
 }
 
 export interface ProtocOptions {
@@ -19,7 +18,7 @@ export function protoc(options: ProtocOptions) {
   const defaultProtoDir = path.resolve(__dirname, '../../native/include');
   const protoDirs = [defaultProtoDir, ...options.includeDirs].map(e => `-I${e}`);
   const pluginArg = `--plugin=protoc-gen-${options.plugin.name}=${options.plugin.path}`;
-  const outOptions = `--${options.plugin.name}_out=${options.plugin.outOptions}`;
+  const outOptions = `--${options.plugin.name}_out=${options.outOptions ?? '.'}`;
 
   const args = [
     pluginArg,
