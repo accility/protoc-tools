@@ -14,7 +14,7 @@ export interface ProtocOptions {
 }
 
 // Convert the protoc options object to the corresponding command line arguments
-export function protoc(options: ProtocOptions) {
+export function protoc(options: ProtocOptions) : Promise<void> {
   const defaultProtoDir = path.resolve(__dirname, '../../native/include');
   const protoDirs = [defaultProtoDir, ...options.includeDirs].map(e => `-I${e}`);
 
@@ -30,5 +30,8 @@ export function protoc(options: ProtocOptions) {
     args.push(`--${plugin.name}_out=${options.outOptions ?? '.'}`);
   }
 
-  spawn('node', args, { stdio: 'inherit' });
+  var processChild = spawn('node', args, { stdio: 'inherit' });
+  return new Promise((resolve, reject) => {
+    processChild.on("close", (code, signal) => code == 0 ? resolve() : reject([code, signal]));
+  });
 };

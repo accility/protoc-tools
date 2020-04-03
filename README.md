@@ -1,6 +1,8 @@
-# @accility/protoc-tools
+# Protocol Buffer Tools
 
-protoc-tools is a wrapper package for Google's protobuf compiler [protoc](https://github.com/protocolbuffers/protobuf/releases) executable. The package manages installing and calling protoc both from the command line and programmatically from node.
+:warning: This package is still in early days and the interfaces might change back and forth. When stable enough it will be released as v1.0.
+
+protoc-tools is a wrapper package for Google's .proto compiler [protoc](https://github.com/protocolbuffers/protobuf/releases) executable. The package manages installing and calling protoc both from the command line and programmatically from node.
 
 ## Installing
 
