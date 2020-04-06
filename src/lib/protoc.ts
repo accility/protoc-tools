@@ -28,6 +28,10 @@ export function protoc(options: ProtocOptions) : Promise<void> {
   if (plugin) {
     args.push(`--plugin=protoc-gen-${plugin.name}=${plugin.path}`);
     args.push(`--${plugin.name}_out=${options.outOptions ?? '.'}`);
+  } else {
+    // TODO: Make sure to enable multiple out options for c++, csharp, etc.
+    // see https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.compiler.command_line_interface
+    args.push(`--js_out=${options.outOptions ?? '.'}`);
   }
 
   var processChild = spawn('node', args, { stdio: 'inherit' });

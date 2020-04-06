@@ -1,2 +1,4 @@
+test/generated
 node_modules
+native
 .vscode

@@ -24,11 +24,18 @@
     "protoc": "./dist/bin/protoc-cli.js"
   },
   "scripts": {
+    "preinstall": "node ./dist/bin/preinstall.js",
     "build": "npx tsc",
-    "test": "echo \"No test specified\""
+    "test": "node test/createJsServerLib.js"
   },
   "devDependencies": {
+    "@types/follow-redirects": "^1.8.0",
     "@types/node": "^13.9.8",
+    "@types/unzipper": "^0.10.3",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "follow-redirects": "^1.11.0",
+    "unzipper": "^0.10.10"
   }
 }
