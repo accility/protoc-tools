@@ -26,7 +26,7 @@
   "scripts": {
     "preinstall": "node ./dist/bin/preinstall.js",
     "build": "npx tsc",
-    "test": "node test/createJsServerLib.js"
+    "test": "npx tsc --project test/tsconfig.json && node test/createSerDes.js"
   },
   "devDependencies": {
     "@types/follow-redirects": "^1.8.0",

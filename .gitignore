@@ -1,4 +1,5 @@
-test/generated
+test/generated/**
+test/*.js
 node_modules
 dist
 native

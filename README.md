@@ -23,18 +23,40 @@ npx protoc
 Calling protoc programmatically
 
 ```javascript
-const protoc = require('@accility/protoc-tools');
+const tools = require('@accility/protoc-tools');
 const path = require('path');
 
-protoc({
+tools.protoc({
     includeDirs: [
-        path.resolve('/Google/api-common-protos'),
-        path.resolve('.')
+        path.resolve('./test/protos')
     ],
-    files: ['product.proto'],
-    outOptions: 'logtostderr=true:.'
+    files: ['simple.proto'],
+    outDir: path.resolve(__dirname, 'generated'),
+    outOptions: [
+        tools.generators.cpp({ outPath: path.resolve(__dirname, 'generated') }),
+        tools.generators.csharp({ outOptions: 'file_extension=.g.cs' }),
+        tools.generators.java(),
+        tools.generators.js(),
+        tools.generators.objc(),
+        tools.generators.python(),
+        tools.generators.ruby()
+    ]
 });
-
 ```
 
-The directory include/google/protobuf includes all core .proto-files, and is automatically added to the include directories.
+The directory include/google/protobuf includes all core .proto-files, and is
+automatically added to the include directories.
+
+## Code Generators
+
+By default protoc can output C++, C#, Java, Javascript, Objective-C, Python and
+Ruby serialization code.
+
+See [Generator Options](https://developers.google.com/protocol-buffers/docs/reference/overview)
+for information about available options for each of the built-in generators.
+
+With the help of plugins we can generate code for
+additional situations. See also:
+
+[@accility/protoc-swagger-plugin](https://www.npmjs.com/package/@accility/protoc-swagger-plugin)
+
