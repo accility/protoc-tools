@@ -24,7 +24,7 @@
 		"protoc": "./dist/bin/protoc-cli.js"
 	},
 	"scripts": {
-		"preinstall": "node ./dist/bin/preinstall.js",
+		"postinstall": "node ./dist/bin/postinstall.js",
 		"build": "npx tsc",
 		"test": "npx tsc --project test/tsconfig.json && node test/createSerDes.js"
 	},
