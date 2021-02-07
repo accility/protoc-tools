@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import { spawn } from 'child_process'
+import * as fs from 'fs'
 
 export interface GeneratorOptions {
 	pluginPath?: string
@@ -12,9 +13,10 @@ export interface OutputOptions extends GeneratorOptions {
 }
 
 export interface ProtocOptions {
-	includeDirs: string[]      // Paths to input files and dependencies
-	files: string[]            // Input .proto-files
-	outDir?: string          // Default directory for the generated files
+	/** Paths to input files and dependencies. */
+	includeDirs: string[]
+	files: string[]
+	outDir?: string
 	outOptions?: OutputOptions[]
 }
 
@@ -32,8 +34,20 @@ export const generators = {
 	ruby: createGeneratorOptions('ruby')
 }
 
+async function mkDirRecursive(dir: string) {
+	try {
+		await fs.promises.stat(dir)
+	} catch (err) {
+		if (err.code === 'ENOENT') {
+			await fs.promises.mkdir(dir, { recursive: true })
+		} else {
+			throw err
+		}
+	}
+}
+
 // Convert the protoc options object to the corresponding command line arguments
-export function protoc(options: ProtocOptions): Promise<void> {
+export async function protoc(options: ProtocOptions): Promise<void> {
 	const defaultProtoDir = resolve(__dirname, '../../native/include')
 	const protoDirs = [defaultProtoDir, ...options.includeDirs].map(e => `-I${e}`)
 	const pluginArgs = (options.outOptions ?? []).filter(o => o.pluginPath).map(o => `--plugin=protoc-gen-${o.name}=${o.pluginPath}`)
@@ -47,8 +61,16 @@ export function protoc(options: ProtocOptions): Promise<void> {
 		...options.files
 	]
 
-	var processChild = spawn('node', args, { stdio: 'inherit' })
-	return new Promise((resolve, reject) => {
+	if (options.outDir)
+		await mkDirRecursive(options.outDir)
+
+	for (const option of options.outOptions ?? []) {
+		if (option.outPath)
+			await mkDirRecursive(option.outPath)
+	}
+
+	const processChild = spawn('node', args, { stdio: 'inherit' })
+	return await new Promise((resolve, reject) => {
 		processChild.on("close", (code, signal) => code == 0 ? resolve() : reject([code, signal]))
 	})
 }
