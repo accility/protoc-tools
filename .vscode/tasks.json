@@ -8,6 +8,14 @@
                 "$tsc"
             ],
             "group": "build"
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "test"
         }
     ]
 }

@@ -1,34 +1,41 @@
 {
-  "name": "@accility/protoc-tools",
-  "version": "0.10.0",
-  "description": "Utility for Google's protobuf compiler protoc",
-  "keywords": [
-    "grpc",
-    "proto",
-    "protoc",
-    "protobuffers",
-    "tools"
-  ],
-  "author": "Accility AB",
-  "license": "MIT",
-  "public": true,
-  "repository": {
-    "url": "https://github.com/accility/protoc-tools.git"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "main": "./dist/lib/protoc.js",
-  "types": "./dist/lib/protoc.d.ts",
-  "bin": {
-    "protoc": "./dist/bin/protoc-cli.js"
-  },
-  "scripts": {
-    "build": "npx tsc",
-    "test": "echo \"No test specified\""
-  },
-  "devDependencies": {
-    "@types/node": "^13.9.8",
-    "typescript": "^3.8.3"
-  }
+	"name": "@accility/protoc-tools",
+	"version": "0.11.0",
+	"description": "Utility for Google's protobuf compiler protoc",
+	"keywords": [
+		"grpc",
+		"proto",
+		"protoc",
+		"protobuffers",
+		"tools"
+	],
+	"author": "Accility AB",
+	"license": "MIT",
+	"public": true,
+	"repository": {
+		"url": "https://github.com/accility/protoc-tools.git"
+	},
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"main": "./dist/lib/protoc.js",
+	"types": "./dist/lib/protoc.d.ts",
+	"bin": {
+		"protoc": "./dist/bin/protoc-cli.js"
+	},
+	"scripts": {
+		"postinstall": "node ./dist/bin/postinstall.js",
+		"build": "npx tsc",
+		"test": "npx tsc --project test/tsconfig.json && node test/createSerDes.js"
+	},
+	"devDependencies": {
+		"@types/follow-redirects": "^1.8.0",
+		"@types/node": "^13.9.8",
+		"@types/unzipper": "^0.10.3",
+		"typescript": "^3.8.3"
+	},
+	"dependencies": {
+		"follow-redirects": "^1.11.0",
+		"unzipper": "^0.10.10"
+	}
 }
