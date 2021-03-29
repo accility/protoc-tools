@@ -1,6 +1,7 @@
 import { https } from 'follow-redirects'
 import { Extract } from 'unzipper'
 import { resolve } from 'path'
+import * as fs from 'fs'
 
 const version = '3.11.4'
 function platform() {
@@ -24,8 +25,12 @@ function arch() {
 const url = `https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protoc-${version}-${platform()}${arch()}.zip`
 const destinationFolder = 'native'
 
+const extension = process.platform == 'win32' ? '.exe' : ''
+const protoc_path = resolve(__dirname, '../../native/bin/protoc' + extension)
+
 console.log(url)
 https.get(url, response => {
 	response.pipe(Extract({ path: destinationFolder }))
+		.on('close', () => fs.chmodSync(protoc_path, '0775'))
 })
 
