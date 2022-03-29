@@ -19,6 +19,7 @@
 		"node": ">=8.0.0"
 	},
 	"main": "./dist/lib/protoc.js",
+	"files": [ "dist/**/*.{js,d.ts}" ],
 	"types": "./dist/lib/protoc.d.ts",
 	"bin": {
 		"protoc": "./dist/bin/protoc-cli.js"
