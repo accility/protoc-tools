@@ -3,7 +3,7 @@ import { Extract } from 'unzipper'
 import { resolve } from 'path'
 import * as fs from 'fs'
 
-const version = '3.20.0'
+const version = '21.0'
 function platform() {
 	switch (process.platform) {
 		case 'linux': return 'linux-x86_'
